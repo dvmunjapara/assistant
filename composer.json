@@ -1,9 +1,16 @@
 {
-    "name": "dv/assistant",
+    "name": "dvmunjapara/assistant",
     "description": "",
     "keywords": [
-        "dv",
-        "assistant"
+        "laravel-ai",
+        "laravel-ai-completion",
+        "laravel-chat",
+        "laravel-llm",
+        "llm",
+        "llm-api",
+        "llm-chat-completion",
+        "assistant",
+        "openai"
     ],
     "homepage": "https://github.com/dvmunjapara/assistant",
     "license": "MIT",
