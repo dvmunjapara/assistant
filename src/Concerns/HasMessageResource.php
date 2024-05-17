@@ -46,11 +46,11 @@ trait HasMessageResource
     {
         foreach ($messages as $message) {
 
-            if (!isset($message['role']) || !isset($message['content'])) {
+            if (! isset($message['role']) || ! isset($message['content'])) {
                 throw new InvalidArgumentException('Each message must have a "role" and "content" key.');
             }
 
-            if (!is_string($message['role']) || !is_string($message['content'])) {
+            if (! is_string($message['role']) || ! is_string($message['content'])) {
                 throw new InvalidArgumentException('Message "role" and "content" must be strings.');
             }
         }

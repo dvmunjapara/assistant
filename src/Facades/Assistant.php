@@ -2,22 +2,23 @@
 
 namespace DV\Assistant\Facades;
 
-use DV\Assistant\Contracts\MessageResource;
 use DV\Assistant\Contracts\Provider;
+use DV\Assistant\Providers\Responses\AssistantResponse;
 use Illuminate\Support\Facades\Facade;
 
 /**
  * @see \DV\Assistant\Assistant
  *
- * @method static Provider execute($provider)
- * @method static MessageResource message($message)
- * @method static MessageResource system($system)
- * @method static MessageResource model($model)
- * @method static MessageResource metadata($metadata)
- * @method static MessageResource temperature($temperature)
- * @method static MessageResource tools($tools)
- * @method static MessageResource topK($topK)
- * @method static MessageResource topP($topP)
+ * @method static AssistantResponse execute()
+ * @method static Provider using($service)
+ * @method static Provider messages($message)
+ * @method static Provider system($system)
+ * @method static Provider model($model)
+ * @method static Provider metadata($metadata)
+ * @method static Provider temperature($temperature)
+ * @method static Provider tools($tools)
+ * @method static Provider topK($topK)
+ * @method static Provider topP($topP)
  */
 class Assistant extends Facade
 {
