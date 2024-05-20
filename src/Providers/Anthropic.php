@@ -75,7 +75,7 @@ class Anthropic implements HasFunction, Provider
         return $this;
     }
 
-    private function handleCallbacks(array $response)
+    private function handleCallbacks(array $response): AssistantResponse
     {
         $function_executed = false;
 
@@ -85,7 +85,7 @@ class Anthropic implements HasFunction, Provider
 
                 if ($content['type'] === 'tool_use') {
 
-                    if (! $this->functions[$content['name']]) {
+                    if (! isset($this->functions[$content['name']])) {
 
                         throw new \Exception("Function callback for {$content['name']} not found.");
                     }
@@ -119,7 +119,7 @@ class Anthropic implements HasFunction, Provider
             return $this->execute();
         }
 
-        return $response;
+        return new AssistantResponse($response['id'], head($response['content'])['text'], $response['usage']['input_tokens'], $response['usage']['output_tokens']);
     }
 
     private function parseResponse($response)
