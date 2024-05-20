@@ -38,17 +38,14 @@ class Anthropic implements HasFunction, Provider
 
         $response = $this->handleCallbacks($response);
 
-        $response = $this->parseResponse($response);
-
-        return new AssistantResponse($response['id'], head($response['content'])['text'], $response['usage']['input_tokens'], $response['usage']['output_tokens']);
-
+        return $this->parseResponse($response);
     }
 
     private function request(): array
     {
         $optional = array_filter([
             'tools' => $this->tools,
-            'system' => $this->system.PHP_EOL.$this->additionalInstructions,
+            'system' => $this->system . PHP_EOL . $this->additionalInstructions,
             'metadata' => $this->metadata,
             'temperature' => $this->temperature,
         ]);
@@ -75,17 +72,17 @@ class Anthropic implements HasFunction, Provider
         return $this;
     }
 
-    private function handleCallbacks(array $response): AssistantResponse
+    private function handleCallbacks(array $response): AssistantResponse|array
     {
         $function_executed = false;
 
-        if (! empty($response['stop_reason']) && $response['stop_reason'] === 'tool_use') {
+        if (!empty($response['stop_reason']) && $response['stop_reason'] === 'tool_use') {
 
             foreach ($response['content'] as $content) {
 
                 if ($content['type'] === 'tool_use') {
 
-                    if (! isset($this->functions[$content['name']])) {
+                    if (!isset($this->functions[$content['name']])) {
 
                         throw new \Exception("Function callback for {$content['name']} not found.");
                     }
@@ -119,11 +116,15 @@ class Anthropic implements HasFunction, Provider
             return $this->execute();
         }
 
-        return new AssistantResponse($response['id'], head($response['content'])['text'], $response['usage']['input_tokens'], $response['usage']['output_tokens']);
+        return $response;
     }
 
-    private function parseResponse($response)
+    private function parseResponse($response): AssistantResponse
     {
+
+        if ($response instanceof AssistantResponse) {
+            return $response;
+        }
 
         foreach ($response['content'] as $key => $content) {
 
@@ -132,6 +133,6 @@ class Anthropic implements HasFunction, Provider
             }
         }
 
-        return $response;
+        return new AssistantResponse($response['id'], head($response['content'])['text'], $response['usage']['input_tokens'], $response['usage']['output_tokens']);
     }
 }
