@@ -3,7 +3,6 @@
 namespace DV\Assistant\Providers;
 
 use DV\Assistant\Concerns\HasMessageResource;
-use DV\Assistant\Contracts\HasFunction;
 use DV\Assistant\Contracts\Provider;
 use DV\Assistant\Providers\Responses\AssistantResponse;
 use Illuminate\Support\Facades\Http;
