@@ -53,17 +53,8 @@ class AssistantServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'assistant');
 
         // Register the main class to use with the facade
-        $this->app->singleton('assistant', function () {
+        $this->app->singleton('completion_assistant', function () {
             return new Assistant;
         });
-
-        $providers = config('assistant.providers');
-
-        foreach ($providers as $key => $provider) {
-
-            $this->app->bind($key, function () use ($provider) {
-                return new $provider['handler'];
-            });
-        }
     }
 }

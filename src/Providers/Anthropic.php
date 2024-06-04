@@ -126,6 +126,10 @@ class Anthropic implements HasFunction, Provider
             return $response;
         }
 
+        if (!empty($response['type']) && $response['type'] === 'error') {
+
+            throw new \Exception($response['error']['message']);
+        }
         foreach ($response['content'] as $key => $content) {
 
             if (preg_match('/<thinking>(?:.|\n)+?<\/thinking>((.|\\n)*)/', $content['text'], $matches)) {

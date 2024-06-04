@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static Provider tools($tools)
  * @method static Provider topK($topK)
  * @method static Provider topP($topP)
+ * @method static Provider functionCallbacks(string $function, callable $callback)
+ * @method static Provider additionalInstructions(string $instructions)
  */
 class Assistant extends Facade
 {
@@ -29,6 +31,6 @@ class Assistant extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'assistant';
+        return 'completion_assistant';
     }
 }

@@ -31,10 +31,17 @@ class Assistant
 
     private function resolveProvider($provider)
     {
-        if (! app()->has($provider)) {
+
+        $config = config("assistant.providers.$provider");
+
+        if (! $config) {
             throw new InvalidArgumentException("Provider {$provider} not found");
         }
 
-        return app()->get($provider);
+        if (! class_exists($config['handler'])) {
+            throw new InvalidArgumentException("Handler for provider {$provider} not found");
+        }
+
+        return app()->make($config['handler']);
     }
 }
